@@ -2,8 +2,32 @@ const Task = require("../models/Task");
 
 async function getTasks(req, res) {
   try {
-    const tasks = await Task.find({ employeeId: req.params.employeeId }).sort({ createdAt: -1 });
-    res.json(tasks);
+    const { employeeId } = req.params;
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit;
+
+    // countDocuments() with a filter — only counts tasks for this employee
+    const total = await Task.countDocuments({ employeeId });
+    const totalPages = Math.ceil(total / limit);
+
+    const tasks = await Task.find({ employeeId })
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    res.json({
+      data: tasks,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    });
   } catch {
     res.status(500).json({ message: "Server error" });
   }

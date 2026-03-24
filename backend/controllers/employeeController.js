@@ -3,8 +3,33 @@ const Task = require("../models/Task");
 
 async function getEmployees(req, res) {
   try {
-    const employees = await Employee.find().sort({ createdAt: -1 });
-    res.json(employees);
+    // MongoDB pagination: parse page & limit from query params
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 5;
+    const skip = (page - 1) * limit; // e.g. page 2, limit 5 → skip 5
+
+    // countDocuments() uses the index — much faster than .length on .find()
+    const total = await Employee.countDocuments();
+    const totalPages = Math.ceil(total / limit);
+
+    // .lean() returns plain JS objects instead of Mongoose Documents → faster reads
+    const employees = await Employee.find()
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(limit)
+      .lean();
+
+    res.json({
+      data: employees,
+      pagination: {
+        total,
+        page,
+        limit,
+        totalPages,
+        hasNextPage: page < totalPages,
+        hasPrevPage: page > 1,
+      },
+    });
   } catch {
     res.status(500).json({ message: "Server error" });
   }
