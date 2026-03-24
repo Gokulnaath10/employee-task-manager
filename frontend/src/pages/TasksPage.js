@@ -21,13 +21,19 @@ function TasksPage() {
   const [deletingId, setDeletingId] = useState(null);
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pagination, setPagination] = useState({ total: 0, totalPages: 1, hasNextPage: false, hasPrevPage: false });
 
-  useEffect(() => { load(); }, [employeeId]);
+  useEffect(() => { load(currentPage); }, [employeeId, currentPage]);
 
-  async function load() {
+  async function load(page) {
     try {
       setIsLoading(true);
-      setTasks(await getTasks(employeeId));
+      const res = await getTasks(employeeId, page, 5);
+      const data = Array.isArray(res) ? res : (res.data ?? []);
+      const pag = Array.isArray(res) ? { total: res.length, page: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false } : res.pagination;
+      setTasks(data);
+      setPagination(pag);
     } catch {
       setError("Failed to load tasks");
     } finally {
@@ -48,8 +54,9 @@ function TasksPage() {
         const updated = await updateTask(employeeId, editId, form);
         setTasks(list => list.map(t => t._id === editId ? updated : t));
       } else {
-        const created = await createTask(employeeId, form);
-        setTasks(list => [created, ...list]);
+        await createTask(employeeId, form);
+        if (currentPage === 1) load(1);
+        else setCurrentPage(1);
       }
       setForm(blank);
       setEditId(null);
@@ -71,8 +78,8 @@ function TasksPage() {
     try {
       setDeletingId(id);
       await deleteTask(employeeId, id);
-      setTasks(list => list.filter(t => t._id !== id));
       if (editId === id) { setEditId(null); setForm(blank); }
+      load(currentPage);
     } catch (err) {
       setError(err.response?.data?.message || "Failed to delete task");
     } finally {
@@ -82,6 +89,7 @@ function TasksPage() {
 
   function onCancel() { setEditId(null); setForm(blank); setError(""); }
 
+  // Filter is applied client-side on the current page's tasks
   const filtered = filter === "All" ? tasks : tasks.filter(t => t.status === filter);
   const pending = tasks.filter(t => t.status === "Pending").length;
   const completed = tasks.filter(t => t.status === "Completed").length;
@@ -102,7 +110,7 @@ function TasksPage() {
         <div className="page-header">
           <div>
             <h1>{employeeName}'s Tasks</h1>
-            <p>{pending} pending · {completed} completed</p>
+            <p>{pagination.total} total &nbsp;·&nbsp; {pending} pending · {completed} completed (this page)</p>
           </div>
         </div>
 
@@ -173,44 +181,67 @@ function TasksPage() {
                 {filter === "All" ? "No tasks yet. Add one using the form." : `No ${filter.toLowerCase()} tasks.`}
               </div>
             ) : (
-              <div className="table-wrap">
-                <table>
-                  <thead>
-                    <tr>
-                      <th>Title</th>
-                      <th>Priority</th>
-                      <th>Status</th>
-                      <th>Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {filtered.map(task => (
-                      <tr key={task._id}>
-                        <td>
-                          <div className="td-name">{task.title}</div>
-                          {task.description && (
-                            <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 2 }}>{task.description}</div>
-                          )}
-                        </td>
-                        <td>
-                          <span className={`pill ${priorityPill[task.priority]}`}>{task.priority}</span>
-                        </td>
-                        <td>
-                          <span className={`pill ${statusPill[task.status]}`}>{task.status}</span>
-                        </td>
-                        <td>
-                          <div className="actions">
-                            <button className="btn btn-ghost btn-sm" onClick={() => onEdit(task)}>Edit</button>
-                            <button className="btn btn-red btn-sm" onClick={() => onDelete(task._id)} disabled={deletingId === task._id}>
-                              {deletingId === task._id ? "..." : "Delete"}
-                            </button>
-                          </div>
-                        </td>
+              <>
+                <div className="table-wrap">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>Title</th>
+                        <th>Priority</th>
+                        <th>Status</th>
+                        <th>Actions</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
+                    </thead>
+                    <tbody>
+                      {filtered.map(task => (
+                        <tr key={task._id}>
+                          <td>
+                            <div className="td-name">{task.title}</div>
+                            {task.description && (
+                              <div style={{ fontSize: 12, color: "#94a3b8", marginTop: 2 }}>{task.description}</div>
+                            )}
+                          </td>
+                          <td>
+                            <span className={`pill ${priorityPill[task.priority]}`}>{task.priority}</span>
+                          </td>
+                          <td>
+                            <span className={`pill ${statusPill[task.status]}`}>{task.status}</span>
+                          </td>
+                          <td>
+                            <div className="actions">
+                              <button className="btn btn-ghost btn-sm" onClick={() => onEdit(task)}>Edit</button>
+                              <button className="btn btn-red btn-sm" onClick={() => onDelete(task._id)} disabled={deletingId === task._id}>
+                                {deletingId === task._id ? "..." : "Delete"}
+                              </button>
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+
+                {/* Pagination controls */}
+                <div className="pagination">
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => setCurrentPage(p => p - 1)}
+                    disabled={!pagination.hasPrevPage}
+                  >
+                    ← Prev
+                  </button>
+                  <span className="page-info">
+                    Page {currentPage} of {pagination.totalPages} &nbsp;({pagination.total} total)
+                  </span>
+                  <button
+                    className="btn btn-ghost btn-sm"
+                    onClick={() => setCurrentPage(p => p + 1)}
+                    disabled={!pagination.hasNextPage}
+                  >
+                    Next →
+                  </button>
+                </div>
+              </>
             )}
           </div>
         </div>
