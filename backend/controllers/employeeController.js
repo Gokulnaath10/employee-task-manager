@@ -68,4 +68,44 @@ async function deleteEmployee(req, res) {
   }
 }
 
-module.exports = { getEmployees, createEmployee, updateEmployee, deleteEmployee };
+async function importEmployees(req, res) {
+  try {
+    const records = req.body;
+    if (!Array.isArray(records) || records.length === 0) {
+      return res.status(400).json({ message: "JSON must be a non-empty array" });
+    }
+
+    // Separate employee fields from tasks
+    const employeeDocs = records.map(({ tasks, ...emp }) => emp);
+
+    // insertMany — one DB operation for all employees
+    const inserted = await Employee.insertMany(employeeDocs, { ordered: false });
+
+    // Build tasks array only for employees that have a tasks field
+    const taskDocs = [];
+    inserted.forEach((emp, i) => {
+      const tasks = records[i].tasks;
+      if (Array.isArray(tasks) && tasks.length > 0) {
+        tasks.forEach(t => taskDocs.push({ ...t, employeeId: emp._id }));
+      }
+    });
+
+    // insertMany tasks only if any exist
+    if (taskDocs.length > 0) {
+      await Task.insertMany(taskDocs, { ordered: false });
+    }
+
+    res.status(201).json({
+      message: `Imported ${inserted.length} employee${inserted.length !== 1 ? "s" : ""} and ${taskDocs.length} task${taskDocs.length !== 1 ? "s" : ""}`,
+      employees: inserted.length,
+      tasks: taskDocs.length,
+    });
+  } catch (error) {
+    if (error.code === 11000) {
+      return res.status(400).json({ message: "One or more emails already exist" });
+    }
+    res.status(500).json({ message: "Server error" });
+  }
+}
+
+module.exports = { getEmployees, createEmployee, updateEmployee, deleteEmployee, importEmployees };

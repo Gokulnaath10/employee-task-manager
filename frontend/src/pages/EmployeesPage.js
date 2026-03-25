@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getEmployees, createEmployee, updateEmployee, deleteEmployee } from "../api/employeeApi";
+import { getEmployees, createEmployee, updateEmployee, deleteEmployee, importEmployees } from "../api/employeeApi";
 
 const blank = { name: "", email: "", role: "", department: "", status: "Active" };
 
@@ -17,6 +17,7 @@ function EmployeesPage() {
   const [isLoading, setIsLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({ total: 0, totalPages: 1, hasNextPage: false, hasPrevPage: false });
+  const [importMsg, setImportMsg] = useState("");
 
   useEffect(() => { load(currentPage); }, [currentPage]);
 
@@ -86,6 +87,25 @@ function EmployeesPage() {
 
   function onCancel() { setEditId(null); setForm(blank); setError(""); }
 
+  async function onImport(e) {
+    const file = e.target.files[0];
+    if (!file) return;
+    setError("");
+    setImportMsg("");
+    try {
+      const text = await file.text();
+      const data = JSON.parse(text);
+      const result = await importEmployees(data);
+      setImportMsg(result.message);
+      if (currentPage === 1) load(1);
+      else setCurrentPage(1);
+    } catch (err) {
+      setError(err.response?.data?.message || "Invalid JSON file");
+    } finally {
+      e.target.value = ""; // reset file input so same file can be re-imported
+    }
+  }
+
   return (
     <>
       <nav className="nav">
@@ -101,6 +121,14 @@ function EmployeesPage() {
         </div>
 
         {error && <div className="banner banner-error">{error}</div>}
+        {importMsg && <div className="banner banner-info">{importMsg}</div>}
+
+        <div style={{ marginBottom: 16 }}>
+          <label className="btn btn-ghost" style={{ cursor: "pointer" }}>
+            Import JSON
+            <input type="file" accept=".json" onChange={onImport} style={{ display: "none" }} />
+          </label>
+        </div>
 
         <div className="grid">
           {/* Form */}
