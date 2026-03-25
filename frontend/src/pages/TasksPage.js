@@ -24,12 +24,12 @@ function TasksPage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pagination, setPagination] = useState({ total: 0, totalPages: 1, hasNextPage: false, hasPrevPage: false });
 
-  useEffect(() => { load(currentPage); }, [employeeId, currentPage]);
+  useEffect(() => { load(currentPage, filter); }, [employeeId, currentPage, filter]);
 
-  async function load(page) {
+  async function load(page, statusFilter) {
     try {
       setIsLoading(true);
-      const res = await getTasks(employeeId, page, 5);
+      const res = await getTasks(employeeId, page, 5, statusFilter);
       const data = Array.isArray(res) ? res : (res.data ?? []);
       const pag = Array.isArray(res) ? { total: res.length, page: 1, totalPages: 1, hasNextPage: false, hasPrevPage: false } : res.pagination;
       setTasks(data);
@@ -89,8 +89,8 @@ function TasksPage() {
 
   function onCancel() { setEditId(null); setForm(blank); setError(""); }
 
-  // Filter is applied client-side on the current page's tasks
-  const filtered = filter === "All" ? tasks : tasks.filter(t => t.status === filter);
+  // Filter is server-side — tasks already contains only the filtered+paginated results
+  const filtered = tasks;
   const pending = tasks.filter(t => t.status === "Pending").length;
   const completed = tasks.filter(t => t.status === "Completed").length;
 
@@ -168,7 +168,7 @@ function TasksPage() {
 
             <div className="filters">
               {["All", "Pending", "Completed"].map(s => (
-                <button key={s} className={`filter-btn${filter === s ? " active" : ""}`} onClick={() => setFilter(s)}>
+                <button key={s} className={`filter-btn${filter === s ? " active" : ""}`} onClick={() => { setFilter(s); setCurrentPage(1); }}>
                   {s}
                 </button>
               ))}

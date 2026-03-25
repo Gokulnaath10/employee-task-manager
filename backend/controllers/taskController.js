@@ -7,10 +7,16 @@ async function getTasks(req, res) {
     const limit = parseInt(req.query.limit) || 5;
     const skip = (page - 1) * limit;
 
-    // Run both queries in parallel — cuts DB round trips in half
+    // Build filter — include status if provided (Pending / Completed)
+    const filter = { employeeId };
+    if (req.query.status && req.query.status !== "All") {
+      filter.status = req.query.status;
+    }
+
+    // Run both queries in parallel with the same filter
     const [total, tasks] = await Promise.all([
-      Task.countDocuments({ employeeId }),
-      Task.find({ employeeId }).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+      Task.countDocuments(filter),
+      Task.find(filter).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
     ]);
     const totalPages = Math.ceil(total / limit);
 
