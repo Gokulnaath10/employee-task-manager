@@ -7,15 +7,12 @@ async function getTasks(req, res) {
     const limit = parseInt(req.query.limit) || 5;
     const skip = (page - 1) * limit;
 
-    // countDocuments() with a filter — only counts tasks for this employee
-    const total = await Task.countDocuments({ employeeId });
+    // Run both queries in parallel — cuts DB round trips in half
+    const [total, tasks] = await Promise.all([
+      Task.countDocuments({ employeeId }),
+      Task.find({ employeeId }).sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    ]);
     const totalPages = Math.ceil(total / limit);
-
-    const tasks = await Task.find({ employeeId })
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
 
     res.json({
       data: tasks,

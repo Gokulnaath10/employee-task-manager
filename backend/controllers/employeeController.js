@@ -8,16 +8,12 @@ async function getEmployees(req, res) {
     const limit = parseInt(req.query.limit) || 5;
     const skip = (page - 1) * limit; // e.g. page 2, limit 5 → skip 5
 
-    // countDocuments() uses the index — much faster than .length on .find()
-    const total = await Employee.countDocuments();
+    // Run both queries in parallel — cuts DB round trips in half
+    const [total, employees] = await Promise.all([
+      Employee.countDocuments(),
+      Employee.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
+    ]);
     const totalPages = Math.ceil(total / limit);
-
-    // .lean() returns plain JS objects instead of Mongoose Documents → faster reads
-    const employees = await Employee.find()
-      .sort({ createdAt: -1 })
-      .skip(skip)
-      .limit(limit)
-      .lean();
 
     res.json({
       data: employees,
