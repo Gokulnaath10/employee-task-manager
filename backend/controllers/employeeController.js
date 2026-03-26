@@ -1,21 +1,27 @@
 const Employee = require("../models/Employee");
 const Task = require("../models/Task");
 
+const cache = {};
+
 async function getEmployees(req, res) {
   try {
-    // MongoDB pagination: parse page & limit from query params
+    const cacheKey = JSON.stringify(req.query);
+    if (cache[cacheKey]) {
+      console.log("employees cache hit:", cacheKey);
+      return res.json(cache[cacheKey]);
+    }
+
     const page = parseInt(req.query.page) || 1;
     const limit = parseInt(req.query.limit) || 5;
-    const skip = (page - 1) * limit; // e.g. page 2, limit 5 → skip 5
+    const skip = (page - 1) * limit;
 
-    // Run both queries in parallel — cuts DB round trips in half
     const [total, employees] = await Promise.all([
       Employee.countDocuments(),
       Employee.find().sort({ createdAt: -1 }).skip(skip).limit(limit).lean(),
     ]);
     const totalPages = Math.ceil(total / limit);
 
-    res.json({
+    const result = {
       data: employees,
       pagination: {
         total,
@@ -25,7 +31,11 @@ async function getEmployees(req, res) {
         hasNextPage: page < totalPages,
         hasPrevPage: page > 1,
       },
-    });
+    };
+
+    cache[cacheKey] = result;
+    console.log("employees cache miss:", cacheKey);
+    res.json(result);
   } catch {
     res.status(500).json({ message: "Server error" });
   }
@@ -38,6 +48,7 @@ async function createEmployee(req, res) {
       return res.status(400).json({ message: "Name, email, role and department are required" });
     }
     const employee = await Employee.create({ name, email, role, department, status });
+    Object.keys(cache).forEach(k => delete cache[k]);
     res.status(201).json(employee);
   } catch (error) {
     if (error.code === 11000) {
@@ -51,6 +62,7 @@ async function updateEmployee(req, res) {
   try {
     const employee = await Employee.findByIdAndUpdate(req.params.id, req.body, { new: true, runValidators: true });
     if (!employee) return res.status(404).json({ message: "Employee not found" });
+    Object.keys(cache).forEach(k => delete cache[k]);
     res.json(employee);
   } catch {
     res.status(500).json({ message: "Server error" });
@@ -62,6 +74,7 @@ async function deleteEmployee(req, res) {
     const employee = await Employee.findByIdAndDelete(req.params.id);
     if (!employee) return res.status(404).json({ message: "Employee not found" });
     await Task.deleteMany({ employeeId: req.params.id });
+    Object.keys(cache).forEach(k => delete cache[k]);
     res.json({ message: "Employee and their tasks deleted" });
   } catch {
     res.status(500).json({ message: "Server error" });
@@ -95,6 +108,7 @@ async function importEmployees(req, res) {
       await Task.insertMany(taskDocs, { ordered: false });
     }
 
+    Object.keys(cache).forEach(k => delete cache[k]);
     res.status(201).json({
       message: `Imported ${inserted.length} employee${inserted.length !== 1 ? "s" : ""} and ${taskDocs.length} task${taskDocs.length !== 1 ? "s" : ""}`,
       employees: inserted.length,
