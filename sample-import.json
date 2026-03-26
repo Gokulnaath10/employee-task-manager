@@ -1,0 +1,320 @@
+[
+  {
+    "name": "Alice Johnson", "email": "alice.johnson@company.com", "role": "Frontend Developer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Build dashboard UI", "priority": "High", "status": "Pending" },
+      { "title": "Write component tests", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Bob Smith", "email": "bob.smith@company.com", "role": "Backend Developer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Design REST API", "priority": "High", "status": "Completed" },
+      { "title": "Optimize database queries", "priority": "High", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Carol White", "email": "carol.white@company.com", "role": "QA Engineer", "department": "Quality Assurance", "status": "Active",
+    "tasks": [
+      { "title": "Write regression tests", "priority": "Medium", "status": "Pending" },
+      { "title": "Test payment flow", "priority": "High", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "David Brown", "email": "david.brown@company.com", "role": "DevOps Engineer", "department": "Infrastructure", "status": "Active",
+    "tasks": [
+      { "title": "Set up CI/CD pipeline", "priority": "High", "status": "Completed" },
+      { "title": "Configure Kubernetes cluster", "priority": "High", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Eva Martinez", "email": "eva.martinez@company.com", "role": "Product Manager", "department": "Product", "status": "Active",
+    "tasks": [
+      { "title": "Write Q2 roadmap", "priority": "High", "status": "Completed" },
+      { "title": "Conduct user interviews", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Frank Lee", "email": "frank.lee@company.com", "role": "UI/UX Designer", "department": "Design", "status": "Active",
+    "tasks": [
+      { "title": "Redesign onboarding flow", "priority": "High", "status": "Pending" },
+      { "title": "Create design system", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Grace Kim", "email": "grace.kim@company.com", "role": "Data Analyst", "department": "Analytics", "status": "Active",
+    "tasks": [
+      { "title": "Build sales dashboard", "priority": "Medium", "status": "Completed" },
+      { "title": "Analyse churn data", "priority": "High", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Henry Wilson", "email": "henry.wilson@company.com", "role": "Mobile Developer", "department": "Engineering", "status": "On Leave"
+  },
+  {
+    "name": "Isla Davis", "email": "isla.davis@company.com", "role": "Security Engineer", "department": "Infrastructure", "status": "Active",
+    "tasks": [
+      { "title": "Conduct penetration test", "priority": "High", "status": "Pending" },
+      { "title": "Review auth middleware", "priority": "High", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Jack Taylor", "email": "jack.taylor@company.com", "role": "Scrum Master", "department": "Product", "status": "Active",
+    "tasks": [
+      { "title": "Facilitate sprint retrospective", "priority": "Low", "status": "Completed" },
+      { "title": "Update project timeline", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Karen Anderson", "email": "karen.anderson@company.com", "role": "HR Manager", "department": "Human Resources", "status": "Active",
+    "tasks": [
+      { "title": "Schedule performance reviews", "priority": "High", "status": "Pending" },
+      { "title": "Update employee handbook", "priority": "Low", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Liam Thomas", "email": "liam.thomas@company.com", "role": "Full Stack Developer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Integrate Stripe payments", "priority": "High", "status": "Pending" },
+      { "title": "Fix CORS issues", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Mia Jackson", "email": "mia.jackson@company.com", "role": "Content Writer", "department": "Marketing", "status": "Active",
+    "tasks": [
+      { "title": "Write blog post on AI trends", "priority": "Medium", "status": "Completed" },
+      { "title": "Draft email newsletter", "priority": "Low", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Noah Harris", "email": "noah.harris@company.com", "role": "Cloud Architect", "department": "Infrastructure", "status": "Active",
+    "tasks": [
+      { "title": "Migrate services to AWS", "priority": "High", "status": "Pending" },
+      { "title": "Document cloud architecture", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Olivia Clark", "email": "olivia.clark@company.com", "role": "Marketing Manager", "department": "Marketing", "status": "Active"
+  },
+  {
+    "name": "Paul Lewis", "email": "paul.lewis@company.com", "role": "Database Administrator", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Set up MongoDB indexes", "priority": "High", "status": "Completed" },
+      { "title": "Backup production database", "priority": "High", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Quinn Robinson", "email": "quinn.robinson@company.com", "role": "Business Analyst", "department": "Product", "status": "On Leave"
+  },
+  {
+    "name": "Rachel Walker", "email": "rachel.walker@company.com", "role": "Frontend Developer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Implement dark mode", "priority": "Low", "status": "Pending" },
+      { "title": "Fix mobile responsiveness", "priority": "High", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Sam Hall", "email": "sam.hall@company.com", "role": "Machine Learning Engineer", "department": "Analytics", "status": "Active",
+    "tasks": [
+      { "title": "Train recommendation model", "priority": "High", "status": "Pending" },
+      { "title": "Clean training dataset", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Tina Allen", "email": "tina.allen@company.com", "role": "Support Engineer", "department": "Customer Support", "status": "Active",
+    "tasks": [
+      { "title": "Resolve ticket #4821", "priority": "High", "status": "Completed" },
+      { "title": "Update FAQ documentation", "priority": "Low", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Uma Young", "email": "uma.young@company.com", "role": "Finance Analyst", "department": "Finance", "status": "Active",
+    "tasks": [
+      { "title": "Prepare Q1 budget report", "priority": "High", "status": "Completed" },
+      { "title": "Reconcile expense reports", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Victor Hernandez", "email": "victor.hernandez@company.com", "role": "Backend Developer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Build notification service", "priority": "Medium", "status": "Pending" },
+      { "title": "Write API documentation", "priority": "Low", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Wendy King", "email": "wendy.king@company.com", "role": "Legal Counsel", "department": "Legal", "status": "Active"
+  },
+  {
+    "name": "Xander Wright", "email": "xander.wright@company.com", "role": "iOS Developer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Fix crash on iOS 17", "priority": "High", "status": "Completed" },
+      { "title": "Add push notifications", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Yara Lopez", "email": "yara.lopez@company.com", "role": "Android Developer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Implement biometric login", "priority": "High", "status": "Pending" },
+      { "title": "Update app to SDK 34", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Zoe Scott", "email": "zoe.scott@company.com", "role": "Operations Manager", "department": "Operations", "status": "Active",
+    "tasks": [
+      { "title": "Review vendor contracts", "priority": "High", "status": "Pending" },
+      { "title": "Coordinate office relocation", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Aaron Green", "email": "aaron.green@company.com", "role": "Site Reliability Engineer", "department": "Infrastructure", "status": "Active",
+    "tasks": [
+      { "title": "Set up alerting rules", "priority": "High", "status": "Completed" },
+      { "title": "Reduce error budget spend", "priority": "High", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Bella Adams", "email": "bella.adams@company.com", "role": "Recruiter", "department": "Human Resources", "status": "Active",
+    "tasks": [
+      { "title": "Screen engineering candidates", "priority": "High", "status": "Pending" },
+      { "title": "Post job openings", "priority": "Low", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Carlos Baker", "email": "carlos.baker@company.com", "role": "Data Engineer", "department": "Analytics", "status": "Active",
+    "tasks": [
+      { "title": "Build ETL pipeline", "priority": "High", "status": "Pending" },
+      { "title": "Set up data warehouse", "priority": "High", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Diana Carter", "email": "diana.carter@company.com", "role": "Copywriter", "department": "Marketing", "status": "Inactive"
+  },
+  {
+    "name": "Ethan Mitchell", "email": "ethan.mitchell@company.com", "role": "Full Stack Developer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Build admin panel", "priority": "High", "status": "Pending" },
+      { "title": "Add role-based access control", "priority": "High", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Fiona Perez", "email": "fiona.perez@company.com", "role": "Graphic Designer", "department": "Design", "status": "Active",
+    "tasks": [
+      { "title": "Design social media banners", "priority": "Low", "status": "Completed" },
+      { "title": "Create product illustrations", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "George Roberts", "email": "george.roberts@company.com", "role": "Accountant", "department": "Finance", "status": "Active",
+    "tasks": [
+      { "title": "File quarterly tax returns", "priority": "High", "status": "Pending" },
+      { "title": "Audit payroll records", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Hannah Turner", "email": "hannah.turner@company.com", "role": "Customer Success Manager", "department": "Customer Support", "status": "Active",
+    "tasks": [
+      { "title": "Onboard new enterprise client", "priority": "High", "status": "Pending" },
+      { "title": "Prepare QBR presentation", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Ivan Phillips", "email": "ivan.phillips@company.com", "role": "Network Engineer", "department": "Infrastructure", "status": "Active"
+  },
+  {
+    "name": "Julia Campbell", "email": "julia.campbell@company.com", "role": "Product Designer", "department": "Design", "status": "Active",
+    "tasks": [
+      { "title": "Prototype checkout flow", "priority": "High", "status": "Completed" },
+      { "title": "Run usability testing", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Kevin Parker", "email": "kevin.parker@company.com", "role": "Solutions Architect", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Design microservices architecture", "priority": "High", "status": "Pending" },
+      { "title": "Review system design docs", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Laura Evans", "email": "laura.evans@company.com", "role": "Technical Writer", "department": "Product", "status": "Active",
+    "tasks": [
+      { "title": "Write API reference docs", "priority": "Medium", "status": "Pending" },
+      { "title": "Update user guide", "priority": "Low", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Mike Edwards", "email": "mike.edwards@company.com", "role": "Sales Engineer", "department": "Sales", "status": "Active",
+    "tasks": [
+      { "title": "Prepare product demo", "priority": "High", "status": "Completed" },
+      { "title": "Follow up with leads", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Nora Collins", "email": "nora.collins@company.com", "role": "Compliance Officer", "department": "Legal", "status": "Active",
+    "tasks": [
+      { "title": "Review GDPR compliance", "priority": "High", "status": "Pending" },
+      { "title": "Update privacy policy", "priority": "High", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Oscar Stewart", "email": "oscar.stewart@company.com", "role": "Sales Manager", "department": "Sales", "status": "Active",
+    "tasks": [
+      { "title": "Set Q2 sales targets", "priority": "High", "status": "Completed" },
+      { "title": "Coach new sales reps", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Penny Sanchez", "email": "penny.sanchez@company.com", "role": "Social Media Manager", "department": "Marketing", "status": "Active"
+  },
+  {
+    "name": "Raj Morris", "email": "raj.morris@company.com", "role": "Embedded Engineer", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Write firmware for sensor module", "priority": "High", "status": "Pending" },
+      { "title": "Debug I2C communication", "priority": "High", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Sara Rogers", "email": "sara.rogers@company.com", "role": "Office Manager", "department": "Operations", "status": "Active",
+    "tasks": [
+      { "title": "Order office supplies", "priority": "Low", "status": "Completed" },
+      { "title": "Plan team offsite", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Tom Reed", "email": "tom.reed@company.com", "role": "CTO", "department": "Engineering", "status": "Active",
+    "tasks": [
+      { "title": "Review tech roadmap", "priority": "High", "status": "Pending" },
+      { "title": "Interview engineering leads", "priority": "High", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Ursula Cook", "email": "ursula.cook@company.com", "role": "Payroll Specialist", "department": "Finance", "status": "Active",
+    "tasks": [
+      { "title": "Process March payroll", "priority": "High", "status": "Completed" },
+      { "title": "Reconcile benefits deductions", "priority": "Medium", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Vincent Morgan", "email": "vincent.morgan@company.com", "role": "Backend Developer", "department": "Engineering", "status": "On Leave"
+  },
+  {
+    "name": "Whitney Bell", "email": "whitney.bell@company.com", "role": "Growth Marketer", "department": "Marketing", "status": "Active",
+    "tasks": [
+      { "title": "Run A/B test on landing page", "priority": "High", "status": "Pending" },
+      { "title": "Analyse ad campaign results", "priority": "Medium", "status": "Completed" }
+    ]
+  },
+  {
+    "name": "Xavier Murphy", "email": "xavier.murphy@company.com", "role": "IT Support", "department": "Operations", "status": "Active",
+    "tasks": [
+      { "title": "Set up laptops for new hires", "priority": "Medium", "status": "Completed" },
+      { "title": "Troubleshoot VPN issues", "priority": "High", "status": "Pending" }
+    ]
+  },
+  {
+    "name": "Yvonne Bailey", "email": "yvonne.bailey@company.com", "role": "Research Scientist", "department": "Analytics", "status": "Active",
+    "tasks": [
+      { "title": "Publish internal research report", "priority": "Medium", "status": "Pending" },
+      { "title": "Review experiment results", "priority": "High", "status": "Completed" }
+    ]
+  }
+]
